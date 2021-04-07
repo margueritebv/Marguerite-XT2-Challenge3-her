@@ -78,9 +78,10 @@
         Http.send();
 
         Http.onreadystatechange = (e) => {
+          var data = JSON.parse(Http.responseText);
           console.log(Http.responseText);
           document.querySelector("#dialog .statistic-weather").innerHTML =
-            e.main.temp + "°C";
+            Math.round(data.main.temp - 273.15) + "°C";
         };
       })
       .addTo(map);
