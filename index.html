@@ -27,7 +27,9 @@
 
     <div id="dialog">
       <h3 class="title-weather">WEER</h3>
-      <h1 class="statistic-weather">10C</h1>
+      <h1 class="statistic-weather"></h1>
+      <h3 class="title-weather">SATELLIET FOTO</h3>
+      <div class="statistic-image"></div>
     </div>
   </body>
   <script
@@ -77,11 +79,32 @@
         Http.open("GET", url);
         Http.send();
 
-        Http.onreadystatechange = (e) => {
-          var data = JSON.parse(Http.responseText);
-          console.log(Http.responseText);
-          document.querySelector("#dialog .statistic-weather").innerHTML =
-            Math.round(data.main.temp - 273.15) + "°C";
+        Http.onreadystatechange = (event) => {
+          if (Http.response) {
+            var data = JSON.parse(Http.responseText);
+            console.log(Http.responseText);
+            document.querySelector("#dialog .statistic-weather").innerHTML =
+              Math.round(data.main.temp - 273.15) + "°C";
+
+            console.log(
+              "<img src='" +
+                "https://api.nasa.gov/planetary/earth/imagery?lon=" +
+                e.geocode.properties.lon +
+                "&lat=" +
+                e.geocode.properties.lat +
+                "&date=2018-01-01&dim=0.15&api_key=IoG9wg3FNSdCiviXpIf4HxEgjCMTDfy8mchBPpfI" +
+                "'/>"
+            );
+
+            document.querySelector("#dialog .statistic-image").innerHTML =
+              "<img alt='satellite image' src='" +
+              "https://api.nasa.gov/planetary/earth/imagery?lon=" +
+              e.geocode.properties.lon +
+              "&lat=" +
+              e.geocode.properties.lat +
+              "&api_key=IoG9wg3FNSdCiviXpIf4HxEgjCMTDfy8mchBPpfI" +
+              "'/>";
+          }
         };
       })
       .addTo(map);

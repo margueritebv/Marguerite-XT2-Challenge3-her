@@ -25,6 +25,10 @@ body {
   padding-right: 36px;
 }
 
+#dialog .statistic-image img {
+  width: 300px;
+}
+
 #mapid {
   position: absolute;
   top: 0;
